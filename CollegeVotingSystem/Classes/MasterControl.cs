@@ -11,7 +11,7 @@ namespace CollegeVotingSystem.Classes
     {
         public MasterControl(string ConnectionString) : base(DatabaseType.MSSQL, ConfigurationManager.ConnectionStrings[ConnectionString].ConnectionString)
         {
-
+            
         }
     }
 }

@@ -156,8 +156,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\Authorized.cs" />
+    <Compile Include="Classes\dbcontrol.cs" />
     <Compile Include="Classes\MasterControl.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -168,6 +172,9 @@
     <Compile Include="init.aspx.designer.cs">
       <DependentUpon>init.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_Course.cs" />
+    <Compile Include="Models\tbl_Position.cs" />
+    <Compile Include="Models\tbl_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -425,6 +432,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="init.aspx" />
+    <Content Include="script.sql" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -851,10 +859,21 @@
     <Content Include="webfonts\fa-thin-100.ttf" />
     <Content Include="webfonts\fa-thin-100.woff" />
     <Content Include="webfonts\fa-thin-100.woff2" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Field.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
+    <Content Include="Views\Course\Field.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Position\Create.cshtml" />
+    <Content Include="Views\Position\Edit.cshtml" />
+    <Content Include="Views\Position\Field.cshtml" />
+    <Content Include="Views\Position\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
