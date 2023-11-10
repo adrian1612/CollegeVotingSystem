@@ -373,6 +373,7 @@
     <Content Include="Content\fonts\fa-solid-900.svg" />
     <Content Include="Content\fonts\fontawesome-all.min.css" />
     <Content Include="Content\fontawesome.min.css" />
+    <Content Include="Content\Img\noimage-available.jpeg" />
     <Content Include="Content\light.css" />
     <Content Include="Content\light.min.css" />
     <Content Include="Content\regular.css" />
@@ -871,6 +872,9 @@
     <Content Include="Views\Position\Edit.cshtml" />
     <Content Include="Views\Position\Field.cshtml" />
     <Content Include="Views\Position\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Registration.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,13 +17,27 @@ namespace CollegeVotingSystem
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool authorize = false;
-            foreach (var role in allowedroles)
+            if (allowedroles.Count() >= 1)
             {
-                //var user = new UserSessions();
-                //if (user.Level.ToString() == role || role == user.User.User)
-                //{
-                //    authorize = true;
-                //}
+                foreach (var role in allowedroles)
+                {
+                    var user = SystemSession.User;
+                    if (user.Role.ToString() == role || role == user.Username)
+                    {
+                        authorize = true;
+                    }
+                }
+            }
+            else
+            {
+                if (SystemSession.User != null)
+                {
+                    authorize = true;
+                }
+                else
+                {
+                    httpContext.Response.Redirect("/");
+                }
             }
             return authorize;
         }

@@ -32,11 +32,10 @@
                         <th>@Html.DisplayNameFor(model => model.ID)</th>
                         <th>@Html.DisplayNameFor(model => model.Username)</th>
                         <th>@Html.DisplayNameFor(model => model.Password)</th>
+                        <th>@Html.DisplayNameFor(model => model.Role)</th>
                         <th>@Html.DisplayNameFor(model => model.StudentID)</th>
-                        <th>@Html.DisplayNameFor(model => model.fname)</th>
-                        <th>@Html.DisplayNameFor(model => model.mn)</th>
-                        <th>@Html.DisplayNameFor(model => model.lname)</th>
-                        <th>@Html.DisplayNameFor(model => model.Img)</th>
+                        <th>@Html.DisplayNameFor(model => model.Fullname)</th>
+                        <th>@Html.DisplayNameFor(model => model.Age)</th>
                         <th>@Html.DisplayNameFor(model => model.Gender)</th>
                         <th>@Html.DisplayNameFor(model => model.bday)</th>
                         <th>@Html.DisplayNameFor(model => model.Course)</th>
@@ -47,17 +46,32 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Username)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Password)</td>
-                            <td>@Html.DisplayFor(modelItem => item.StudentID)</td>
-                            <td>@Html.DisplayFor(modelItem => item.fname)</td>
-                            <td>@Html.DisplayFor(modelItem => item.mn)</td>
-                            <td>@Html.DisplayFor(modelItem => item.lname)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Img)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-                            <td>@Html.DisplayFor(modelItem => item.bday)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Course)</td>
+                            <td>@Html.DisplayFor(model => item.ID)</td>
+                            <td>@Html.DisplayFor(model => item.Username)</td>
+                            <td>@Html.DisplayFor(model => item.Password)</td>
+                            <td>
+                                @switch (item.Role)
+                                {
+                                    case UserRole.Admin:
+                                        <span class="badge text-bg-success">@Enum.GetName(typeof(UserRole), item.Role)</span>
+                                        break;
+                                    case UserRole.User:
+                                        <span class="badge text-bg-secondary">@Enum.GetName(typeof(UserRole), item.Role)</span>
+                                        break;
+                                    case UserRole.Auditor:
+                                        <span class="badge text-bg-primary">@Enum.GetName(typeof(UserRole), item.Role)</span>
+                                        break;
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(model => item.StudentID)</td>
+                            <td>
+                                <img src="@string.Format("{0}", item.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : item.Img64)" alt="Image" class="rounded-circle me-2" width="25" />
+                                @Html.DisplayFor(model => item.Fullname)
+                            </td>
+                            <td>@Html.DisplayFor(model => item.Age)</td>
+                            <td>@Html.DisplayFor(model => item.Gender)</td>
+                            <td>@Html.FormatValue(item.bday, "{0:MMM dd, yyyy}")</td>
+                            <td>@Html.DisplayFor(model => item.CourseName)</td>
                             <td class="text-end">
                                 <div class="filter">
                                     <a class="text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

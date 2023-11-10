@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -21,6 +22,7 @@ namespace CollegeVotingSystem.Models
 
         [Display(Name = "Password")]
         [MinLength(4, ErrorMessage = "Must be a minimum of 4 character")]
+        [DataType(DataType.Password)]
         [Required]
         public String Password { get; set; }
 
@@ -36,25 +38,41 @@ namespace CollegeVotingSystem.Models
         [ScaffoldColumn(false)]
         public Byte[] Fingerprint1 { get; set; }
 
-        [Display(Name = "StudentID")]
+        [Display(Name = "Student ID")]
         [Required]
         public String StudentID { get; set; }
 
-        [Display(Name = "First name")]
+        [Display(Name = "Given name")]
         [Required]
         public String fname { get; set; }
 
         [Display(Name = "Middle name")]
         public String mn { get; set; }
 
-        [Display(Name = "Last name")]
+        [Display(Name = "Surname")]
         [Required]
         public String lname { get; set; }
 
         public string Fullname { get; set; }
 
-        [Display(Name = "Img")]
+        [Display(Name = "Picture")]
         public Byte[] Img { get; set; }
+
+        public HttpPostedFileBase Upload { get; set; }
+
+        public string Img64
+        {
+            get
+            {
+                var output = "";
+                if (Img != null)
+                {
+                    var string64 = Convert.ToBase64String(Img);
+                    output = $"data:image/jpeg;base64,{string64}";
+                }
+                return output;
+            }
+        }
 
         [Display(Name = "Gender")]
         [Required]
@@ -71,6 +89,8 @@ namespace CollegeVotingSystem.Models
         [Display(Name = "Course")]
         [Required]
         public Int32 Course { get; set; }
+
+        public string CourseName { get; set; }
 
         [Display(Name = "Timestamp")]
         [ScaffoldColumn(false)]
@@ -114,11 +134,9 @@ namespace CollegeVotingSystem.Models
                 p.Add("@fname", obj.fname);
                 p.Add("@mn", obj.mn);
                 p.Add("@lname", obj.lname);
-                p.Add("@Img", obj.Img);
                 p.Add("@Gender", obj.Gender);
                 p.Add("@bday", obj.bday);
                 p.Add("@Course", obj.Course);
-
             }, CommandType.StoredProcedure);
         }
 
@@ -134,8 +152,10 @@ namespace CollegeVotingSystem.Models
                 p.Add("@fname", obj.fname);
                 p.Add("@mn", obj.mn);
                 p.Add("@lname", obj.lname);
-                p.Add("@Img", obj.Img);
+                if (obj.Upload != null)
+                    p.Add("@Img", new BinaryReader(obj.Upload.InputStream).ReadBytes(obj.Upload.ContentLength));
                 p.Add("@Gender", obj.Gender);
+                p.Add("@Role", obj.Role);
                 p.Add("@bday", obj.bday);
                 p.Add("@Course", obj.Course);
 
@@ -151,13 +171,13 @@ namespace CollegeVotingSystem.Models
 
         public tbl_User Login(string Username, string Password)
         {
-            return s.Query<tbl_User>("Login", p => { p.Add("@Username", Username); p.Add("@Password", Password); }, CommandType.StoredProcedure).SingleOrDefault();
+            return s.Query<tbl_User>("tbl_User_Proc", p => { p.Add("@Type", "Login"); p.Add("@Username", Username); p.Add("@Password", Password); }, CommandType.StoredProcedure).SingleOrDefault();
         }
     }
 
     public enum UserRole
     {
-        Admin, User, Auditor
+        Admin = 1, User = 2, Auditor = 3
     }
 
 

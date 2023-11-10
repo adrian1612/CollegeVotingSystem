@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace CollegeVotingSystem.Controllers
 {
+    [Authorized]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -22,19 +23,26 @@ namespace CollegeVotingSystem.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Login(string CallBackMessage = null)
         {
+            InitAdmin();
             if (!string.IsNullOrEmpty(CallBackMessage))
             {
                 ViewBag.Message = CallBackMessage;
+            }
+            if (SystemSession.User != null)
+            {
+                return RedirectToAction("Index");
             }
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Login(string Username, string Password)
         {
-            InitAdmin();
+            ModelState.Clear();
             var user = new tbl_User();
             if (ModelState.IsValid)
             {
@@ -49,12 +57,14 @@ namespace CollegeVotingSystem.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Registration()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Registration(tbl_User m)
         {
             var user = new tbl_User();
@@ -64,6 +74,12 @@ namespace CollegeVotingSystem.Controllers
                 return RedirectToAction("Login", new { CallBackMessage = "Congratulation for making your official account!" });
             }
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return Redirect("/");
         }
 
 

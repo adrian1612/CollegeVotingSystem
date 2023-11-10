@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CollegeVotingSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,4 +18,9 @@ namespace CollegeVotingSystem.Classes
             throw e;
         }
     }
+}
+
+public class SystemSession
+{
+    public static tbl_User User { get { return HttpContext.Current.Session["User"] as tbl_User; } }
 }

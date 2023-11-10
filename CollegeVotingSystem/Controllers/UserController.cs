@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace CollegeVotingSystem.Models
 {
+    [Authorized]
     public class UserController : Controller
     {
         tbl_User mod = new tbl_User();
@@ -48,6 +49,30 @@ namespace CollegeVotingSystem.Models
         {
             var item = mod.Find(ID);
             return View(item);
+        }
+
+        [ActionName("Profile")]
+        public ActionResult UserProfile(string CallBackMessage = null)
+        {
+            var item = mod.Find(SystemSession.User.ID);
+            if (!string.IsNullOrEmpty(CallBackMessage))
+            {
+                ViewBag.Message = CallBackMessage;
+            }
+            return View(item);
+        }
+
+        [ActionName("Profile")]
+        [HttpPost]
+        public ActionResult UserProfile(tbl_User m)
+        {
+            if (ModelState.IsValid)
+            {
+                mod.Update(m);
+                Session["User"] = mod.Find(m.ID);
+                return RedirectToAction("Profile", new { CallBackMessage = "Information successfully updated!" });
+            }
+            return View(m);
         }
 
         [HttpPost]

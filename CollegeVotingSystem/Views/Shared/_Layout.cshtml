@@ -14,7 +14,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="@Url.Action("Index", "Home", new { area = "" })" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">College Voting System</span>
+                <span class="d-none d-lg-block" style="font-size:1.1rem;">College Voting System</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -177,11 +177,9 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        @*<img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">*@
-                        <i class="bi bi-person"></i>
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Adrian J</span>
+                        <img src="@string.Format("{0}", SystemSession.User.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : SystemSession.User.Img64)" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@SystemSession.User.Username</span>
                     </a><!-- End Profile Iamge Icon -->
-
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
                             <h6>Adrian Jaspio</h6>
@@ -192,7 +190,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Profile", "User", new { area = "" })">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -210,19 +208,8 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                                <i class="bi bi-question-circle"></i>
-                                <span>Need Help?</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="@Url.Action("Logout", "Home", new { area = "" })">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -241,13 +228,15 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="@Url.Action("Index", "Home", new { area = "" })">
+                <a class="nav-link collapsed" href="@Url.Action("Index", "Home", new { area = "" })">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li>
 
-            <li class="nav-item">
+           
+
+            @*<li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -263,16 +252,40 @@
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Components Nav -->
+            </li>*@
 
-            <li class="nav-heading">Pages</li>
+            <li class="nav-heading">User Panel</li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
+                <a class="nav-link collapsed" href="@Url.Action("Profile", "User", new { area = "" })">
                     <i class="bi bi-person"></i>
                     <span>Profile</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
+            </li>
+
+            <li class="nav-heading">Admin Control Panel</li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="@Url.Action("Index", "User", new { area = "" })">
+                    <i class="bi bi-person-fill-gear"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="@Url.Action("Index", "Course", new { area = "" })">
+                    <i class="bi bi-journal-bookmark"></i>
+                    <span>Course</span>
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="@Url.Action("Index", "Position", new { area = "" })">
+                    <i class="bi bi-person-vcard"></i>
+                    <span>Position</span>
+                </a>
+            </li>
 
         </ul>
 
@@ -288,7 +301,7 @@
             &copy; Copyright <strong><span>2023</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            Designed by <a href="https://adrian1612.github.io" target="_blank">Danica &amp; Trisha</a>
+            Designed by <a href="#" target="_blank">Danica &amp; Trisha</a>
         </div>
     </footer><!-- End Footer -->
 

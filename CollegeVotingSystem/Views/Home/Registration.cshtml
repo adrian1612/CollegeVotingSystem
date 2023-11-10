@@ -1,0 +1,76 @@
+@using CollegeVotingSystem.Models
+@model tbl_User
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+<div class="pt-4 pb-2">
+    <h5 class="card-title text-center pb-0 fs-4">Registration</h5>
+    <p class="text-center small">Fill-up all the field</p>
+</div>
+
+<form action="@Url.Action("Registration", "Home")" method="post" class="row g-3 needs-validation" novalidate>
+
+    <div class="col-6">
+        @Html.LabelFor(model => model.Username, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+
+    <div class="col-6">
+        @Html.LabelFor(model => model.Password, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+
+    <div class="col-12">
+        @Html.LabelFor(model => model.StudentID, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.StudentID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+
+    <div class="col-12">
+        @Html.LabelFor(model => model.fname, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.fname, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+
+    <div class="col-12">
+        @Html.LabelFor(model => model.mn, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.mn, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+
+    <div class="col-12">
+        @Html.LabelFor(model => model.lname, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.lname, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+    <div class="col-6">
+        @Html.LabelFor(model => model.Gender, new { @class = "form-label form-label-sm" })
+        @Html.DropDownListFor(model => model.Gender,
+        new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Male", Value = "Male" },
+            new SelectListItem { Text = "Female", Value = "Female" }
+        }, "Select Gender", new { @class = "form-select form-select-sm" })
+    </div>
+
+    <div class="col-6">
+        @Html.LabelFor(model => model.bday, new { @class = "form-label form-label-sm" })
+        @Html.EditorFor(model => model.bday, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+    </div>
+
+    <div class="col-12">
+        @Html.LabelFor(model => model.Course, new { @class = "form-label form-label-sm" })
+        @Html.DropDownListFor(model => model.Course, new tbl_Course().ListCourse(), "Select Course", new { @class = "form-select form-select-sm searchbox" })
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary w-100" type="submit">Submit</button>
+    </div>
+    <div class="col-12">
+        <p class="small mb-0">Already have an account? <a href="@Url.Action("Login", "Home")">Login</a></p>
+    </div>
+</form>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
