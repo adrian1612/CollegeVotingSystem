@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 10/11/2023 5:23:27 pm ******/
 CREATE DATABASE [dbCollegeVotingSystem]
 GO
 USE [dbCollegeVotingSystem]
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -57,7 +57,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +108,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -183,7 +183,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -207,7 +207,7 @@ CREATE TABLE [dbo].[tbl_Candidate](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Course]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_Course]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +228,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Election]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_Election]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -249,7 +249,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Position]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_Position]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +270,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -288,7 +288,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -320,7 +320,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -338,7 +338,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  View [dbo].[vw_User]    Script Date: 10/11/2023 3:11:21 pm ******/
+/****** Object:  View [dbo].[vw_User]    Script Date: 10/11/2023 5:23:27 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
