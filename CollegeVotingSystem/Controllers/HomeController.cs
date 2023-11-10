@@ -68,10 +68,14 @@ namespace CollegeVotingSystem.Controllers
         public ActionResult Registration(tbl_User m)
         {
             var user = new tbl_User();
+            
             if (ModelState.IsValid)
             {
-                user.Create(m);
-                return RedirectToAction("Login", new { CallBackMessage = "Congratulation for making your official account!" });
+                if (user.Create(m))
+                {
+                    return RedirectToAction("Login", new { CallBackMessage = "Congratulation for making your official account!" });
+                }
+                ModelState.AddModelError("", "Username already exist!");
             }
             return View();
         }

@@ -123,8 +123,9 @@ namespace CollegeVotingSystem.Models
             }).SingleOrDefault();
         }
 
-        public void Create(tbl_User obj)
+        public bool Create(tbl_User obj)
         {
+            var result = false;
             s.Query("tbl_User_Proc", p =>
             {
                 p.Add("@Type", "Create");
@@ -137,7 +138,11 @@ namespace CollegeVotingSystem.Models
                 p.Add("@Gender", obj.Gender);
                 p.Add("@bday", obj.bday);
                 p.Add("@Course", obj.Course);
-            }, CommandType.StoredProcedure);
+            }, CommandType.StoredProcedure).ForEach(r =>
+            {
+                result = (bool)r[0];
+            });
+            return result;
         }
 
         public void Update(tbl_User obj)

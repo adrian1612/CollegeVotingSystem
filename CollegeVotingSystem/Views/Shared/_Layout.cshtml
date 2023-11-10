@@ -178,12 +178,12 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="@string.Format("{0}", SystemSession.User.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : SystemSession.User.Img64)" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">@SystemSession.User.Username</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@SystemSession.User.Fullname</span>
                     </a><!-- End Profile Iamge Icon -->
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Adrian Jaspio</h6>
-                            <span>Programmer</span>
+                            <h6>@SystemSession.User.Fullname</h6>
+                            <span>@SystemSession.User.CourseName</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
