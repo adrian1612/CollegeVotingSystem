@@ -253,29 +253,32 @@
                 </a>
             </li>
 
-            <li class="nav-heading">Admin Control Panel</li>
+            @if (SystemSession.User.Role == CollegeVotingSystem.Models.UserRole.Admin)
+            {
+                <li class="nav-heading">Admin Control Panel</li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index", "User", new { area = "" })">
-                    <i class="bi bi-people"></i>
-                    <span>Users</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index", "User", new { area = "" })">
+                        <i class="bi bi-people"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index", "Course", new { area = "" })">
-                    <i class="bi bi-journal-bookmark"></i>
-                    <span>Course</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index", "Course", new { area = "" })">
+                        <i class="bi bi-journal-bookmark"></i>
+                        <span>Course</span>
+                    </a>
+                </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="@Url.Action("Index", "Position", new { area = "" })">
-                    <i class="bi bi-person-vcard"></i>
-                    <span>Position</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("Index", "Position", new { area = "" })">
+                        <i class="bi bi-person-vcard"></i>
+                        <span>Position</span>
+                    </a>
+                </li>
+            }
 
         </ul>
 
