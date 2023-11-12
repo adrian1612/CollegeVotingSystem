@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CollegeVotingSystem.Models
 {
@@ -110,6 +111,12 @@ namespace CollegeVotingSystem.Models
 
                 return r;
             }).ToList();
+        }
+
+        public SelectList ListUser(object Selected = null)
+        {
+            var list = new SelectList(List(), "ID", "Fullname", Selected);
+            return list;
         }
 
         public tbl_User Find(int ID)

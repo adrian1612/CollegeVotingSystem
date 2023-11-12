@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CollegeVotingSystem.Models
 {
@@ -40,6 +41,12 @@ namespace CollegeVotingSystem.Models
 
                 return r;
             }).ToList();
+        }
+
+        public SelectList ListPosition(object Selected = null)
+        {
+            var list = new SelectList(List(), "ID", "Position", Selected);
+            return list;
         }
 
         public tbl_Position Find(int ID)

@@ -1,4 +1,5 @@
 @model CollegeVotingSystem.Models.tbl_Election
+@using CollegeVotingSystem.Models
 @{
 
 }
@@ -29,3 +30,53 @@
         </div>
     </div>
 </div>
+<div class="col-md-12">
+    <div class="card-title">Candidate(s)</div>
+    <table class="table table-light table-bordered">
+        <thead>
+            <tr>
+                <th>Candidate</th>
+                <th>Position</th>
+                <th>Plataforma</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model?.Candidates?.Count >= 1)
+            {
+                @foreach (var item in Model.Candidates.Select((value, i) => new { i, value }))
+                {
+                    <tr>
+                        <td>
+                            @Html.DropDownList($"Candidates[{item.i}].UserID", new tbl_User().ListUser(item.value.UserID), "Select Candidate", new { @class = "form-select form-select-sm" })
+                        </td>
+                        <td>
+                            @Html.DropDownList($"Candidates[{item.i}].Position", new tbl_Position().ListPosition(item.value.Position), "Select Position", new { @class = "form-select form-select-sm" })
+                        </td>
+                        <td>
+                            @Html.TextArea($"Candidates[{item.i}].Plataforma", new { @class = "form-control form-control-sm" })
+                        </td>
+                    </tr>
+                    
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DropDownList($"Candidates[0].UserID", new tbl_User().ListUser(), "Select Candidate", new { @class = "form-select form-select-sm" })
+                    </td>
+                    <td>
+                        @Html.DropDownList($"Candidates[0].Position", new tbl_Position().ListPosition(), "Select Position", new { @class = "form-select form-select-sm" })
+                    </td>
+                    <td>
+                        @Html.TextArea($"Candidates[0].Plataforma", new { @class = "form-control form-control-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+</script>
