@@ -1,82 +1,159 @@
 @model CollegeVotingSystem.Models.tbl_Election
 @using CollegeVotingSystem.Models
 @{
-
+    var user = new tbl_User();
+    var position = new tbl_Position();
 }
 <div class="col-md-12">
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 </div>
 <div class="col-md-6">
-    <div class="row mb-3">
-        @Html.LabelFor(model => model.Title, new { @class = "col-sm-2 col-form-label col-form-label-sm" })
-        <div class="col-sm-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                Election Information
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(model => model.Title, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(model => model.ElectionDate, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.ElectionDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ElectionDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(model => model.Remarks, new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row mb-3">
-        @Html.LabelFor(model => model.ElectionDate, new { @class = "col-sm-2 col-form-label col-form-label-sm" })
-        <div class="col-sm-10">
-            @Html.EditorFor(model => model.ElectionDate, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-            @Html.ValidationMessageFor(model => model.ElectionDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="row mb-3">
-        @Html.LabelFor(model => model.Remarks, new { @class = "col-sm-2 col-form-label col-form-label-sm" })
-        <div class="col-sm-10">
-            @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
-        </div>
-    </div>
+
 </div>
+
+
 <div class="col-md-12">
-    <div class="card-title">Candidate(s)</div>
-    <table class="table table-light table-bordered">
-        <thead>
-            <tr>
-                <th>Candidate</th>
-                <th>Position</th>
-                <th>Plataforma</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model?.Candidates?.Count >= 1)
-            {
-                @foreach (var item in Model.Candidates.Select((value, i) => new { i, value }))
-                {
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">Candidate(s)</div>
+            <table class="table table-light table-bordered">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DropDownList($"Candidates[{item.i}].UserID", new tbl_User().ListUser(item.value.UserID), "Select Candidate", new { @class = "form-select form-select-sm" })
-                        </td>
-                        <td>
-                            @Html.DropDownList($"Candidates[{item.i}].Position", new tbl_Position().ListPosition(item.value.Position), "Select Position", new { @class = "form-select form-select-sm" })
-                        </td>
-                        <td>
-                            @Html.TextArea($"Candidates[{item.i}].Plataforma", new { @class = "form-control form-control-sm" })
-                        </td>
+                        <th><span class="me-3">Candidate</span><button type="button" class="btn btn-sm btn-success" onclick="AddCandidate()">Add Candidate</button></th>
+                        <th>Position</th>
+                        <th>Plataforma</th>
+                        <th></th>
                     </tr>
-                    
-                }
-            }
-            else
+                </thead>
+                <tbody>
+                    @if (Model?.Candidates?.Count >= 1)
             {
-                <tr>
-                    <td>
-                        @Html.DropDownList($"Candidates[0].UserID", new tbl_User().ListUser(), "Select Candidate", new { @class = "form-select form-select-sm" })
-                    </td>
-                    <td>
-                        @Html.DropDownList($"Candidates[0].Position", new tbl_Position().ListPosition(), "Select Position", new { @class = "form-select form-select-sm" })
-                    </td>
-                    <td>
-                        @Html.TextArea($"Candidates[0].Plataforma", new { @class = "form-control form-control-sm" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                foreach (var item in Model.Candidates.Select((value, i) => new { i, value }))
+                {
+                            <tr>
+                                <td>
+                                    @Html.DropDownList($"Candidates[{item.i}].UserID", user.ListUser(item.value.UserID), "Select Candidate", new { @class = "form-select form-select-sm" })
+                                </td>
+                                <td>
+                                    @Html.DropDownList($"Candidates[{item.i}].Position", position.ListPosition(item.value.Position), "Select Position", new { @class = "form-select form-select-sm" })
+                                </td>
+                                <td>
+                                    @Html.TextArea($"Candidates[{item.i}].Plataforma", item.value.Plataforma, new { @class = "form-control form-control-sm" })
+                                </td>
+                                <td><button class="btn btn-danger" onclick="Remove(this)"><i class="fa fa-trash"></i></button></td>
+                            </tr>
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <select name="Candidates[0].UserID" class="form-select candidate" style="width:100%" required></select>
+                            </td>
+                            <td>
+                                <select name="Candidates[0].Position" class="form-select position" style="width:100%" required></select>
+                            </td>
+                            <td>
+                                <textarea name="Candidates[0].Plataforma" class="form-control plataforma"></textarea>
+                            </td>
+                            <td><button class="btn btn-danger" onclick="Remove(this)"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 
 <script>
+    var Users = @Html.Raw(Json.Encode(user.List().Select(r => new { id = r.ID, text = r.Fullname })));
+    var Positions = @Html.Raw(Json.Encode(position.List().Select(r => new { id = r.ID, text = r.Position })));
+    var loadData = () => {
+        $('.candidate').select2({
+            data: Users,
+            width: 'resolve',
+            placeholder: 'Select Candidate',
+            allowClear: true
+        });
+ 
+        $('.position').select2({
+            data: Positions,
+            width: 'resolve',
+            placeholder: 'Select Position',
+            allowClear: true
+        });
+        $('.candidate, .position').val('').trigger('change');
+    }
+    $(document).ready(() => {
+        loadData();
+    });
 
+    var AddCandidate = () => {
+        $('table tbody').append(
+            `
+            <tr>
+                <td>
+                    <select name="Candidates[0].UserID" class="form-select candidate" style="width:100%" required></select>
+                </td>
+                <td>
+                    <select name="Candidates[0].Position" class="form-select position" style="width:100%" required></select>
+                </td>
+                <td>
+                    <textarea name="Candidates[0].Plataforma" class="form-control plataforma"></textarea>
+                </td>
+                <td><button class="btn btn-danger" onclick="Remove(this)"><i class="fa fa-trash"></i></button></td>
+            </tr>
+            `
+            );
+        InitIndex();
+        loadData();
+    }
+
+    var InitIndex = () => {
+        var rows = $('table tbody tr');
+        $.each(rows, (i, item) => {
+            var index = $(item).index();
+            var fields = $(item).find('select, textarea');
+            $.each(fields, (i, o) => {
+                $(o).attr('name', $(o).attr('name').replace(/\[\d\]/, `[${index}]`));
+            });
+        });
+    }
+
+
+    var Remove = (item) => {
+        $(item).parent('td').parent('tr').remove();
+        InitIndex();
+    }
 </script>

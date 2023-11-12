@@ -28,6 +28,18 @@ namespace CollegeVotingSystem.Models
             return View();
         }
 
+        public JsonResult Users()
+        {
+            var users = new tbl_User().List();
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Positions()
+        {
+            var positions = new tbl_Position().List();
+            return Json(positions, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Create()
         {
             return View();

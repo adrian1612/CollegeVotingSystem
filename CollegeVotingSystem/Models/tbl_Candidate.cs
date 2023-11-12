@@ -20,9 +20,25 @@ namespace CollegeVotingSystem.Models
 
         [Display(Name = "Voters")]
         public Int32 UserID { get; set; }
+        public string Fullname { get; set; }
+        public byte[] Img { get; set; }
+        public string Img64
+        {
+            get
+            {
+                var output = "";
+                if (Img != null)
+                {
+                    output = $"data:image/jpeg;base64,{Convert.ToBase64String(Img)}";
+                }
+                return output;
+            }
+        }
+        public string Course { get; set; }
 
         [Display(Name = "Position")]
         public Int32 Position { get; set; }
+        public string PositionName { get; set; }
 
         [Display(Name = "Plataforma")]
         public String Plataforma { get; set; }
@@ -40,10 +56,21 @@ namespace CollegeVotingSystem.Models
         public tbl_Candidate()
         {
         }
+
         public List<tbl_Candidate> List()
         {
 
-            return s.Query<tbl_Candidate>("SELECT * FROM [tbl_Candidate]")
+            return s.Query<tbl_Candidate>("SELECT * FROM [vw_Candidate]")
+            .Select(r =>
+            {
+
+                return r;
+            }).ToList();
+        }
+        public List<tbl_Candidate> List(int Election)
+        {
+
+            return s.Query<tbl_Candidate>("SELECT * FROM [vw_Candidate] WHERE ElectionID = @ID", p => p.Add("@ID", Election))
             .Select(r =>
             {
 
@@ -54,7 +81,7 @@ namespace CollegeVotingSystem.Models
         public tbl_Candidate Find(int ID)
         {
 
-            return s.Query<tbl_Candidate>("SELECT * FROM tbl_Candidate where ID = @ID", p => p.Add("@ID", ID))
+            return s.Query<tbl_Candidate>("SELECT * FROM vw_Candidate where ID = @ID", p => p.Add("@ID", ID))
             .Select(r =>
             {
 

@@ -45,11 +45,11 @@ namespace CollegeVotingSystem.Models
         }
         public List<tbl_Election> List()
         {
-
+            var candidates = new tbl_Candidate().List();
             return s.Query<tbl_Election>("tbl_Election_Proc", p => { p.Add("@Type", "Search"); }, CommandType.StoredProcedure)
             .Select(r =>
             {
-
+                r.Candidates = candidates.Where(f => f.ElectionID == r.ID).ToList();
                 return r;
             }).ToList();
         }
@@ -60,7 +60,7 @@ namespace CollegeVotingSystem.Models
             return s.Query<tbl_Election>("tbl_Election_Proc", p => { p.Add("@Type", "Find"); p.Add("@ID", ID); }, CommandType.StoredProcedure)
             .Select(r =>
             {
-
+                r.Candidates = new tbl_Candidate().List(r.ID);
                 return r;
             }).SingleOrDefault();
         }
@@ -73,7 +73,7 @@ namespace CollegeVotingSystem.Models
                 p.Add("@Title", obj.Title);
                 p.Add("@ElectionDate", obj.ElectionDate);
                 p.Add("@Remarks", obj.Remarks);
-                p.Add("@Candidate", s.ConvertListToDataTable(obj.Candidates));
+                p.Add("@Candidates", s.ConvertListToDataTable(obj.Candidates, "ID", "ElectionID", "UserID", "Position", "Plataforma", "Active", "Timestamp"));
 
             }, CommandType.StoredProcedure);
         }
@@ -87,7 +87,7 @@ namespace CollegeVotingSystem.Models
                 p.Add("@Title", obj.Title);
                 p.Add("@ElectionDate", obj.ElectionDate);
                 p.Add("@Remarks", obj.Remarks);
-                p.Add("@Candidate", s.ConvertListToDataTable(obj.Candidates));
+                p.Add("@Candidates", s.ConvertListToDataTable(obj.Candidates, "ID", "ElectionID", "UserID", "Position", "Plataforma", "Active", "Timestamp"));
             }, CommandType.StoredProcedure);
         }
         public void Delete(tbl_Election obj)

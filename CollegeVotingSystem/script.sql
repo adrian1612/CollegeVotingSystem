@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 12/11/2023 8:38:30 pm ******/
 CREATE DATABASE [dbCollegeVotingSystem]
 GO
 USE [dbCollegeVotingSystem]
 GO
-/****** Object:  UserDefinedTableType [dbo].[tp_Candidate]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  UserDefinedTableType [dbo].[tp_Candidate]    Script Date: 12/11/2023 8:38:30 pm ******/
 CREATE TYPE [dbo].[tp_Candidate] AS TABLE(
 	[ID] [int] NULL,
 	[ElectionID] [int] NULL,
@@ -16,7 +16,7 @@ CREATE TYPE [dbo].[tp_Candidate] AS TABLE(
 	[Timestamp] [datetime] NULL
 )
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -69,7 +69,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Election_Proc]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Election_Proc]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,9 +89,9 @@ BEGIN
 IF @Type = 'Create'
 BEGIN
 	INSERT INTO [tbl_Election]
-	([Title],[ElectionDate],[Remarks])
+	([Title],[ElectionDate],[Remarks], Active)
 	VALUES
-	(@Title,@ElectionDate,@Remarks)
+	(@Title,@ElectionDate,@Remarks, 1)
 
 	INSERT INTO tbl_Candidate (ElectionID
       ,[UserID]
@@ -139,7 +139,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,7 +191,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -267,7 +267,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,7 +291,7 @@ CREATE TABLE [dbo].[tbl_Candidate](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Course]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_Course]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -312,7 +312,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Election]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_Election]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -335,7 +335,7 @@ CREATE TABLE [dbo].[tbl_Election](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Position]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_Position]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -356,7 +356,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -374,7 +374,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -406,7 +406,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -424,7 +424,7 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 
 GO
-/****** Object:  View [dbo].[vw_User]    Script Date: 12/11/2023 3:07:42 pm ******/
+/****** Object:  View [dbo].[vw_User]    Script Date: 12/11/2023 8:38:30 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -457,6 +457,38 @@ SELECT u.[ID]
 
 
 GO
+/****** Object:  View [dbo].[vw_Candidate]    Script Date: 12/11/2023 8:38:30 pm ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[vw_Candidate]
+AS
+SELECT c.[ID]
+      ,c.[ElectionID]
+      ,c.[UserID]
+	  ,Fullname = u.Fullname
+	  ,Img = u.Img
+	  ,Course = u.CourseName
+      ,c.[Position]
+	  ,PositionName = (SELECT Position FROM tbl_Position WHERE ID = C.Position)
+      ,c.[Plataforma]
+      ,c.[Active]
+      ,c.[Timestamp]
+  FROM [tbl_Candidate] c WITH (NOLOCK)
+  OUTER APPLY (SELECT * FROM vw_User WHERE ID = C.UserID) u
+GO
+SET IDENTITY_INSERT [dbo].[tbl_Candidate] ON 
+
+GO
+INSERT [dbo].[tbl_Candidate] ([ID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (13, 1, 1, 1, NULL, 1, CAST(0x0000B0B80153FAFE AS DateTime))
+GO
+INSERT [dbo].[tbl_Candidate] ([ID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (14, 1, 3, 1, NULL, 1, CAST(0x0000B0B80153FAFE AS DateTime))
+GO
+INSERT [dbo].[tbl_Candidate] ([ID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (15, 1, 2, 2, NULL, 1, CAST(0x0000B0B80153FAFE AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[tbl_Candidate] OFF
+GO
 SET IDENTITY_INSERT [dbo].[tbl_Course] ON 
 
 GO
@@ -469,6 +501,13 @@ GO
 INSERT [dbo].[tbl_Course] ([ID], [Course], [Active], [Timestamp]) VALUES (4, N'Bachelor of Science in Accountancy', 1, CAST(0x0000B0B600AB3622 AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Course] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tbl_Election] ON 
+
+GO
+INSERT [dbo].[tbl_Election] ([ID], [Title], [ElectionDate], [Remarks], [Active], [Timestamp]) VALUES (1, N'Election 2024', CAST(0x0000B22800000000 AS DateTime), NULL, 1, CAST(0x0000B0B8014C5A9E AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[tbl_Election] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Position] ON 
 

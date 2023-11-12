@@ -16,7 +16,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">@ViewBag.Title</div>
@@ -41,8 +41,32 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ElectionDate)</td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                        <b>Candidate(s)</b>
+                                        <table class="table table-sm table-light table-bordered">
+                                            <tr>
+                                                <th>Fullname</th>
+                                                <th>Position</th>
+                                                <th>Course</th>
+                                                <th>Plataforma</th>
+                                            </tr>
+                                            @foreach (var c in item.Candidates)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <img width="30" class="rounded-circle me-2" src="@string.Format("{0}", c.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : c.Img64)" alt="Alternate Text" />
+                                                        @c.Fullname
+                                                    </td>
+                                                    <td>@c.PositionName</td>
+                                                    <td>@c.Course</td>
+                                                    <td>@c.Plataforma</td>
+                                                </tr>
+                                            }
+                                            
+                                        </table>
+                                    </td>
+                                    <td><span class="badge text-bg-success">@Html.FormatValue(item.ElectionDate, "{0:MMM dd, yyyy}")</span></td>
                                     <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
                                     <td class="text-end">
                                         <div class="filter">
