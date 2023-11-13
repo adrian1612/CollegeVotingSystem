@@ -882,6 +882,7 @@
     <Content Include="Views\Election\Edit.cshtml" />
     <Content Include="Views\Election\Field.cshtml" />
     <Content Include="Views\Election\Index.cshtml" />
+    <Content Include="Views\Election\ElectionVote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

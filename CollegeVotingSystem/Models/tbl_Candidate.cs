@@ -15,6 +15,8 @@ namespace CollegeVotingSystem.Models
         [ScaffoldColumn(false)]
         public Int32 ID { get; set; }
 
+        public Guid UniqueID { get; set; }
+
         [Display(Name = "Election")]
         public Int32 ElectionID { get; set; }
 

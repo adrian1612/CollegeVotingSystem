@@ -61,6 +61,7 @@
                 {
                             <tr>
                                 <td>
+                                    @Html.Hidden($"Candidates[{item.i}].UniqueID", item.value.UniqueID)
                                     @Html.DropDownList($"Candidates[{item.i}].UserID", user.ListUser(item.value.UserID), "Select Candidate", new { @class = "form-select form-select-sm" })
                                 </td>
                                 <td>

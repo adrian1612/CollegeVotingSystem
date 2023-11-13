@@ -16,6 +16,22 @@ namespace CollegeVotingSystem.Models
             return View(list);
         }
 
+        public ActionResult ElectionVote()
+        {
+            var item = mod.Election();
+            return View(item);
+        }
+
+        [HttpPost]
+        public ActionResult ElectionVote(tbl_Election m)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View(m);
+        }
+
         public ActionResult Action(string Type, int? ID = null)
         {
             switch (Type)
@@ -40,6 +56,14 @@ namespace CollegeVotingSystem.Models
             return Json(positions, JsonRequestBehavior.AllowGet);
         }
 
+        void CandidateValidation(tbl_Election m)
+        {
+            if (m.Candidates?.Count <= 0)
+            {
+                ModelState.AddModelError("", "Need atleast 1 candidate to continue.");
+            }
+        }
+
         public ActionResult Create()
         {
             return View();
@@ -48,6 +72,7 @@ namespace CollegeVotingSystem.Models
         [HttpPost]
         public ActionResult Create(tbl_Election m)
         {
+            CandidateValidation(m);
             if (ModelState.IsValid)
             {
                 mod.Create(m);
@@ -55,6 +80,8 @@ namespace CollegeVotingSystem.Models
             }
             return View(m);
         }
+
+      
 
         public ActionResult Edit(int ID)
         {
@@ -65,6 +92,7 @@ namespace CollegeVotingSystem.Models
         [HttpPost]
         public ActionResult Edit(tbl_Election m)
         {
+            CandidateValidation(m);
             if (ModelState.IsValid)
             {
                 mod.Update(m);
