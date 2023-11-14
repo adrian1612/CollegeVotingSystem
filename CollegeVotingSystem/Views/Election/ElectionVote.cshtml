@@ -7,6 +7,13 @@
     var position = new tbl_Position();
 }
 
+<style>
+    .col-md-4 .card:has(input[type=radio]:checked)  {
+        background-color: lightseagreen;
+        color:white;
+    }
+</style>
+
 <div class="pagetitle">
     <h1>@ViewBag.Title</h1>
     <nav>
@@ -17,43 +24,61 @@
     </nav>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">@Model.Title</div>
-               
-                @foreach (var pos in position.List())
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">@Model.Title</div>
+                    @using (Html.BeginForm())
                 {
-                    <div class="card-title">@pos.Position</div>
-                    <div class="row">
-                        @foreach (var cand in Model.Candidates)
+                        @Html.HiddenFor(model => model.ID)
+                        foreach (var pos in position.List())
                         {
-                            if (cand.Position == pos.ID)
-                            {
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body mt-3">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <img width="100%" class="rounded-2 shadow" src="@(cand.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : cand.Img64)" alt="Picture" />
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <h4>@cand.Fullname<br /><span class="fs-6">@cand.Course</span></h4><br />
-                                                    <span>@cand.Plataforma</span>
+                            <div class="@pos.Position">
+                                <div class="card-title">@pos.Position</div>
+                                <div class="row">
+                                    @foreach (var cand in Model.Candidates.Select((item, i) => new { i, item }))
+                                    {
+                                        if (cand.item.Position == pos.ID)
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="card" onclick="selected(this, '.@pos.Position')">
+                                                    <div class="card-body mt-3">
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-4">
+                                                                <img width="100%" class="rounded-2 shadow" src="@(cand.item.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : cand.item.Img64)" alt="Picture" />
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <h4>@cand.item.Fullname<br /><span class="fs-6">@cand.item.Course</span></h4><br />
+                                                                <span>@cand.item.Plataforma</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="Positions" value="" />
+                                                            <input type="radio" class="form-check-input" name="@pos.Position" value="@cand.item.UniqueID" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        }
+                                    }
                                 </div>
-                            }
+                            </div>
                         }
-                    </div>
-                }
+                        <input type="submit" class="btn btn-success" value="Submit" />
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+
+}
+
 
 @section scripts {
     <script>
@@ -62,5 +87,12 @@
             searching: true
         });
 
+        var selected = (item, position) => {
+            var radio = $(item).find(`input[type='radio']`);
+            var parameters = $(item).find('input[type="hidden"]');
+            $(position).find('input[type="hidden"]').val('');
+            radio.prop('checked', true);
+            parameters.val(radio.val());
+        }
     </script>
 }

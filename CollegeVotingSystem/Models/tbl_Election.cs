@@ -57,7 +57,7 @@ namespace CollegeVotingSystem.Models
         public tbl_Election Election()
         {
             var candidates = new tbl_Candidate().List();
-            return s.Query<tbl_Election>("tbl_Election_Proc", p => { p.Add("@Type", "Election"); }, CommandType.StoredProcedure)
+            return s.Query<tbl_Election>("tbl_Election_Proc", p => { p.Add("@Type", "Election"); p.Add("@User", SystemSession.User.ID); }, CommandType.StoredProcedure)
             .Select(r =>
             {
                 r.Candidates = candidates.Where(f => f.ElectionID == r.ID).ToList();
@@ -89,6 +89,16 @@ namespace CollegeVotingSystem.Models
             }, CommandType.StoredProcedure);
         }
 
+        public void Vote(List<Vote> Candidates)
+        {
+            s.Query("tbl_Election_Proc", p =>
+            {
+                p.Add("@Type", "Vote");
+                p.Add("@Vote", s.ConvertListToDataTable(Candidates));
+
+            }, CommandType.StoredProcedure);
+        }
+
         public void Update(tbl_Election obj)
         {
             s.Query("tbl_Election_Proc", p =>
@@ -107,6 +117,20 @@ namespace CollegeVotingSystem.Models
             {
                 p.Add("@ID", obj.ID);
             });
+        }
+    }
+
+    public class Vote
+    {
+        public int Election { get; set; }
+        public int UserID { get; set; }
+        public Guid Candidate { get; set; }
+
+        public Vote(int Election, int UserID, Guid Candidate)
+        {
+            this.Election = Election;
+            this.UserID = UserID;
+            this.Candidate = Candidate;
         }
     }
 

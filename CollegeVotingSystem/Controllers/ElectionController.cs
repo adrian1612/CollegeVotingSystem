@@ -19,17 +19,27 @@ namespace CollegeVotingSystem.Models
         public ActionResult ElectionVote()
         {
             var item = mod.Election();
+            if (item == null)
+            {
+                
+            }
             return View(item);
         }
 
         [HttpPost]
-        public ActionResult ElectionVote(tbl_Election m)
+        public ActionResult ElectionVote(tbl_Election m, Guid[] Positions)
         {
-            if (ModelState.IsValid)
+            ModelState.Clear();
+            var position = from i in Positions
+                           where i != Guid.Empty
+                           select new Vote(m.ID, SystemSession.User.ID, i);
+            if (ModelState.IsValid) 
             {
-
+                mod.Vote(position.ToList());
+                return RedirectToAction("ElectionVote");
             }
-            return View(m);
+            var item = mod.Election();
+            return View(item);
         }
 
         public ActionResult Action(string Type, int? ID = null)

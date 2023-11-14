@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 14/11/2023 3:23:19 pm ******/
 CREATE DATABASE [dbCollegeVotingSystem]
 GO
 USE [dbCollegeVotingSystem]
 GO
-/****** Object:  UserDefinedTableType [dbo].[tp_Candidate]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  UserDefinedTableType [dbo].[tp_Candidate]    Script Date: 14/11/2023 3:23:19 pm ******/
 CREATE TYPE [dbo].[tp_Candidate] AS TABLE(
 	[ID] [int] NULL,
 	[UniqueID] [uniqueidentifier] NULL,
@@ -17,7 +17,14 @@ CREATE TYPE [dbo].[tp_Candidate] AS TABLE(
 	[Timestamp] [datetime] NULL
 )
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  UserDefinedTableType [dbo].[tp_Vote]    Script Date: 14/11/2023 3:23:19 pm ******/
+CREATE TYPE [dbo].[tp_Vote] AS TABLE(
+	[Election] [int] NULL,
+	[UserID] [int] NULL,
+	[Candidate] [uniqueidentifier] NULL
+)
+GO
+/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -71,7 +78,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Election_Proc]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Election_Proc]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -85,7 +92,9 @@ CREATE PROCEDURE [dbo].[tbl_Election_Proc]
 @Remarks varchar(max) = null,
 @Active bit = null,
 @Timestamp datetime = null,
-@Candidates tp_Candidate READONLY
+@User INT = NULL,
+@Candidates tp_Candidate READONLY,
+@Vote tp_Vote READONLY
 AS
 BEGIN
 IF @Type = 'Create'
@@ -119,7 +128,7 @@ BEGIN
       ,[Position]
       ,[Plataforma]
       ,[Active])
-	  SELECT UniqueID,@ID
+	  SELECT NEWID(),@ID
       ,[UserID]
       ,[Position]
       ,[Plataforma]
@@ -133,7 +142,15 @@ END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Election'
 BEGIN
-	SELECT TOP 1 * FROM [tbl_Election] WHERE Active = 1 ORDER BY ID DESC
+	SELECT TOP 1 * FROM [tbl_Election]
+	WHERE Active = 1 AND @User NOT IN (SELECT UserID FROM tbl_UnverifiedVote)
+	ORDER BY ID DESC
+END
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+IF @Type = 'Vote'
+BEGIN
+	INSERT INTO tbl_UnverifiedVote (ElectionID, UserID, Candidate)
+	SELECT Election, UserID, Candidate FROM @Vote
 END
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 IF @Type = 'Find'
@@ -147,7 +164,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -200,7 +217,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -277,7 +294,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -302,7 +319,7 @@ CREATE TABLE [dbo].[tbl_Candidate](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Course]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_Course]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -323,7 +340,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Election]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_Election]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -346,7 +363,7 @@ CREATE TABLE [dbo].[tbl_Election](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Position]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_Position]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -367,7 +384,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -385,7 +402,7 @@ CREATE TABLE [dbo].[tbl_UnverifiedVote](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -417,7 +434,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -435,7 +452,7 @@ CREATE TABLE [dbo].[tbl_Vote](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  View [dbo].[vw_User]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  View [dbo].[vw_User]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -469,7 +486,7 @@ SELECT u.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_Candidate]    Script Date: 13/11/2023 10:54:55 am ******/
+/****** Object:  View [dbo].[vw_Candidate]    Script Date: 14/11/2023 3:23:19 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -497,11 +514,11 @@ GO
 SET IDENTITY_INSERT [dbo].[tbl_Candidate] ON 
 
 GO
-INSERT [dbo].[tbl_Candidate] ([ID], [UniqueID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (18, N'c396688b-ea64-42f5-941c-cfc2f862fae7', 1, 1, 1, NULL, 1, CAST(N'2023-11-13 10:52:38.830' AS DateTime))
+INSERT [dbo].[tbl_Candidate] ([ID], [UniqueID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (21, N'03bd49b3-7559-4aa5-abb8-5fcf4a2ba037', 1, 1, 1, NULL, 1, CAST(N'2023-11-14 14:41:45.050' AS DateTime))
 GO
-INSERT [dbo].[tbl_Candidate] ([ID], [UniqueID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (19, N'81181844-5ac9-41c7-9c0d-24003b1e7f07', 1, 3, 1, NULL, 1, CAST(N'2023-11-13 10:52:38.830' AS DateTime))
+INSERT [dbo].[tbl_Candidate] ([ID], [UniqueID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (22, N'e4cbc466-9f27-4884-b053-c1a7d2f1f642', 1, 3, 1, NULL, 1, CAST(N'2023-11-14 14:41:45.050' AS DateTime))
 GO
-INSERT [dbo].[tbl_Candidate] ([ID], [UniqueID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (20, N'00000000-0000-0000-0000-000000000000', 1, 2, 2, NULL, 1, CAST(N'2023-11-13 10:52:38.830' AS DateTime))
+INSERT [dbo].[tbl_Candidate] ([ID], [UniqueID], [ElectionID], [UserID], [Position], [Plataforma], [Active], [Timestamp]) VALUES (23, N'64c9b43e-153f-45ed-8c27-5d6dd71796d0', 1, 2, 2, NULL, 1, CAST(N'2023-11-14 14:41:45.050' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[tbl_Candidate] OFF
 GO
