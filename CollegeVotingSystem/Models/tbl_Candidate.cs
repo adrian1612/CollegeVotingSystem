@@ -69,6 +69,18 @@ namespace CollegeVotingSystem.Models
                 return r;
             }).ToList();
         }
+
+        public List<tbl_Candidate> ListMyCandidate()
+        {
+
+            return s.Query<tbl_Candidate>("SELECT * FROM [vw_Candidate] WHERE UniqueID IN (SELECT Candidate FROM tbl_UnverifiedVote WHERE UserID = @ID)", p => p.Add("@ID", SystemSession.User.ID))
+            .Select(r =>
+            {
+
+                return r;
+            }).ToList();
+        }
+
         public List<tbl_Candidate> List(int Election)
         {
 

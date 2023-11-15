@@ -21,7 +21,7 @@ namespace CollegeVotingSystem.Models
             var item = mod.Election();
             if (item == null)
             {
-                
+                ViewBag.MyVote = mod.MyVote();
             }
             return View(item);
         }
