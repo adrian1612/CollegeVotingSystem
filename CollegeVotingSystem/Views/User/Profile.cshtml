@@ -133,7 +133,7 @@
                         <span>@Model.CourseName</span><br />
                         <span><b>@Model.StudentID</b></span><br />
                         <span>@Model.Age Years old</span><br />
-                        @if (Model.Fingerprint1 == null)
+                        @if (string.IsNullOrEmpty(Model.Fingerprint1))
                         {
                             <span class="text-danger fa-fade"><i class="fa fa-exclamation-triangle"></i> No available fingerprint</span>
                         }

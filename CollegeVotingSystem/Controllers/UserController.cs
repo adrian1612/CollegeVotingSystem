@@ -86,6 +86,27 @@ namespace CollegeVotingSystem.Models
             return View(m);
         }
 
+        public ActionResult UpdateUserBiometric(int ID, string cb = null)
+        {
+            var item = mod.Find(ID);
+            if (!string.IsNullOrEmpty(cb))
+            {
+                ViewBag.Message = cb;
+            }
+            return View(item);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateUserBiometric(tbl_User m)
+        {
+            if (ModelState.IsValid)
+            {
+                mod.UpdateUserBiometric(m);
+                return RedirectToAction("UpdateUserBiometric", new { ID = m.ID, cb = "User biometric successfully saved!" });
+            }
+            return View(m);
+        }
+
         public ActionResult Detail(int ID)
         {
             var item = mod.Find(ID);

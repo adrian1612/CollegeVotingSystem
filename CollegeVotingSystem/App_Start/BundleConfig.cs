@@ -33,6 +33,10 @@ namespace CollegeVotingSystem
                       "~/Scripts/fontawesome/all.js",
                       "~/Scripts/index.global.js",
                       "~/Scripts/main.js",
+                      "~/Scripts/Fingerprint/es6-shim.js",
+                      "~/Scripts/Fingerprint/websdk.client.bundle.min.js",
+                      "~/Scripts/Fingerprint/fingerprint.sdk.min.js",
+                      "~/Scripts/Fingerprint/app.js",
                       "~/Scripts/Angular/angular.js",
                       "~/Scripts/Angular/angular-route.js",
                       "~/Scripts/Angular/angular-animate.js",
@@ -52,3 +56,4 @@ namespace CollegeVotingSystem
         }
     }
 }
+

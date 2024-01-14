@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -12,6 +14,7 @@ namespace CollegeVotingSystem.Models
 {
     public class tbl_User
     {
+        string DestinationPath = "~/Scanned/";
         dbcontrol s = new dbcontrol();
         [Display(Name = "ID")]
         public Int32 ID { get; set; }
@@ -37,7 +40,7 @@ namespace CollegeVotingSystem.Models
 
         [Display(Name = "Fingerprint")]
         [ScaffoldColumn(false)]
-        public Byte[] Fingerprint1 { get; set; }
+        public string Fingerprint1 { get; set; }
 
         [Display(Name = "Student ID")]
         [Required]
@@ -173,6 +176,30 @@ namespace CollegeVotingSystem.Models
 
             }, CommandType.StoredProcedure);
         }
+
+        public void UpdateUserBiometric(tbl_User obj)
+        {
+            s.Query("tbl_User_Proc", p =>
+            {
+                p.Add("@Type", "UpdateUserBiometric");
+                p.Add("@ID", obj.ID);
+                p.Add("@Fingerprint1", SaveImage(obj.Username, obj.Fingerprint1));
+
+            }, CommandType.StoredProcedure);
+        }
+
+        string SaveImage(string Username, string Base64)
+        {
+            var result = "";
+            Base64 = Base64.Replace("data:image/png;base64,", "");
+            var Bytes = Convert.FromBase64String(Base64);
+            var Stream = new MemoryStream(Bytes);
+            Image img = Image.FromStream(Stream);
+            result = DestinationPath + Username;
+            img.Save(HttpContext.Current.Server.MapPath(result), ImageFormat.Png);
+            return result;
+        }
+
         public void Delete(tbl_User obj)
         {
             s.Query("DELETE FROM [tbl_User] WHERE ID = @ID", p =>
