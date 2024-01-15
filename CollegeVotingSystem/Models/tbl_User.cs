@@ -190,14 +190,28 @@ namespace CollegeVotingSystem.Models
 
         string SaveImage(string Username, string Base64)
         {
+            CheckifDirectoryExist(Username);
             var result = "";
-            Base64 = Base64.Replace("data:image/png;base64,", "");
             var Bytes = Convert.FromBase64String(Base64);
             var Stream = new MemoryStream(Bytes);
             Image img = Image.FromStream(Stream);
-            result = DestinationPath + Username;
+            result = DestinationPath + Username + ".png";
             img.Save(HttpContext.Current.Server.MapPath(result), ImageFormat.Png);
             return result;
+        }
+
+        void CheckifDirectoryExist(string username)
+        {
+            var dir = HttpContext.Current.Server.MapPath(DestinationPath);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            var file = dir + username;
+            if (File.Exists(dir + username))
+            {
+                File.Delete(file);
+            }
         }
 
         public void Delete(tbl_User obj)

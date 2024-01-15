@@ -11,6 +11,10 @@ namespace CollegeVotingSystem
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/Fingerprint/es6-shim.js",
+                        "~/Scripts/Fingerprint/websdk.client.bundle.min.js",
+                        "~/Scripts/Fingerprint/fingerprint.sdk.min.js",
+                        "~/Scripts/Fingerprint/app.js",
                         "~/Scripts/jquery.unobtrusive-ajax.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -33,10 +37,7 @@ namespace CollegeVotingSystem
                       "~/Scripts/fontawesome/all.js",
                       "~/Scripts/index.global.js",
                       "~/Scripts/main.js",
-                      "~/Scripts/Fingerprint/es6-shim.js",
-                      "~/Scripts/Fingerprint/websdk.client.bundle.min.js",
-                      "~/Scripts/Fingerprint/fingerprint.sdk.min.js",
-                      "~/Scripts/Fingerprint/app.js",
+                     
                       "~/Scripts/Angular/angular.js",
                       "~/Scripts/Angular/angular-route.js",
                       "~/Scripts/Angular/angular-animate.js",
@@ -48,6 +49,7 @@ namespace CollegeVotingSystem
                       "~/Content/css/select2-bootstrap-5-theme.min.css",
                       "~/Content/DataTables/css/dataTables.bootstrap5.min.css",
                       "~/Content/all.css",
+                      "~/Content/app.css",
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/variables.css",
                       "~/Content/bootstrap-icons/bootstrap-icons.css",

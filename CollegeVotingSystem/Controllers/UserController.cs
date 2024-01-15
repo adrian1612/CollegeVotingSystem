@@ -99,6 +99,7 @@ namespace CollegeVotingSystem.Models
         [HttpPost]
         public ActionResult UpdateUserBiometric(tbl_User m)
         {
+            ModelState.Clear();
             if (ModelState.IsValid)
             {
                 mod.UpdateUserBiometric(m);
