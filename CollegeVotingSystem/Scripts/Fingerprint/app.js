@@ -233,6 +233,23 @@ function populateReaders(readersArray) {
     }
 };
 
+
+var sample = (s) => {
+    var data = new FormData();
+    data.append('base64', s);
+    $.ajax({
+        type: 'post',
+        url: '/User/Identify',
+        data: data,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: (d) => {
+            console.log(d);
+        }
+    });
+}
+
 function sampleAcquired(s) {
     if (currentFormat == Fingerprint.SampleFormat.PngImage) {
         // If sample acquired format is PNG- perform following call on object recieved 
@@ -241,6 +258,7 @@ function sampleAcquired(s) {
         var samples = JSON.parse(s.samples);
         localStorage.setItem("imageSrc", "data:image/png;base64," + Fingerprint.b64UrlTo64(samples[0]));
         $('input[name="Fingerprint1"]').val(Fingerprint.b64UrlTo64(samples[0]));
+        sample(Fingerprint.b64UrlTo64(samples[0]));
         if (state == document.getElementById("content-capture")) {
             var vDiv = document.getElementById('imagediv');
             vDiv.innerHTML = "";
@@ -307,6 +325,9 @@ function sampleAcquired(s) {
         //disableEnableExport(true);
     }
 }
+
+
+
 
 function readersDropDownPopulate(checkForRedirecting) { // Check for redirecting is a boolean value which monitors to redirect to content tab or not
     myVal = "";

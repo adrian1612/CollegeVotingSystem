@@ -84,6 +84,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="SourceAFIS, Version=1.7.0.41358, Culture=neutral, PublicKeyToken=b195ffd29617dfb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\SourceAFIS.1.7\lib\net451\SourceAFIS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -889,6 +893,7 @@
     <Content Include="Views\Election\Index.cshtml" />
     <Content Include="Views\Election\ElectionVote.cshtml" />
     <Content Include="Views\User\UpdateUserBiometric.cshtml" />
+    <Content Include="Views\User\IdentifyPerson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

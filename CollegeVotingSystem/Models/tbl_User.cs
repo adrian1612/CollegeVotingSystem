@@ -1,4 +1,5 @@
 using CollegeVotingSystem.Classes;
+using SourceAFIS.Simple;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -116,10 +117,58 @@ namespace CollegeVotingSystem.Models
             }).ToList();
         }
 
+        
+
+        public Person Identify(Fingerprint fingerprint)
+        {
+            AfisEngine afis = new AfisEngine();
+            var persons = new List<Person>();
+            List().ForEach(r =>
+            {
+                if (!string.IsNullOrEmpty(r.Fingerprint1))
+                {
+                    var tempuser = new Person();
+                    tempuser.Id = r.ID;
+                    var tempfinger = new Fingerprint();
+                    tempfinger.AsBitmap = new Bitmap(HttpContext.Current.Server.MapPath(r.Fingerprint1));
+                    tempuser.Fingerprints.Add(tempfinger);
+                    afis.Extract(tempuser);
+                    persons.Add(tempuser);
+                }
+            });
+            var prob = new Person();
+            prob.Id = 1;
+            prob.Fingerprints.Add(fingerprint);
+            afis.Extract(prob);
+            var personprob = afis.Identify(prob, persons).SingleOrDefault();
+            if (personprob != null)
+            {
+                var user = Find(personprob.Id);
+                var finger = new Fingerprint();
+                finger.AsBitmap = new Bitmap(HttpContext.Current.Server.MapPath(user.Fingerprint1));
+                var item = new Person();
+                item.Id = user.ID;
+                item.Fingerprints.Add(finger);
+                return item;
+            }
+            return null;
+        }
+
         public SelectList ListUser(object Selected = null)
         {
             var list = new SelectList(List(), "ID", "Fullname", Selected);
             return list;
+        }
+
+        public tbl_User Find_Username(string Username)
+        {
+
+            return s.Query<tbl_User>("tbl_User_Proc", p => { p.Add("@Type", "Find_Username"); p.Add("@Username", Username); }, CommandType.StoredProcedure)
+            .Select(r =>
+            {
+
+                return r;
+            }).SingleOrDefault();
         }
 
         public tbl_User Find(int ID)
@@ -232,6 +281,5 @@ namespace CollegeVotingSystem.Models
     {
         Admin = 1, User = 2, Auditor = 3
     }
-
 
 }

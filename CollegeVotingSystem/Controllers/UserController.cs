@@ -1,9 +1,12 @@
 using CollegeVotingSystem.Models;
+using SourceAFIS.Simple;
+using SourceAFIS.Matching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace CollegeVotingSystem.Models
 {
@@ -106,6 +109,19 @@ namespace CollegeVotingSystem.Models
                 return RedirectToAction("UpdateUserBiometric", new { ID = m.ID, cb = "User biometric successfully saved!" });
             }
             return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult Identify(string base64)
+        {
+            var fingerprint = new Fingerprint();
+            fingerprint.AsBitmap = new System.Drawing.Bitmap(new MemoryStream(Convert.FromBase64String(base64)));
+            return Json(mod.Find(mod.Identify(fingerprint).Id), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult IdentifyPerson()
+        {
+            return View();
         }
 
         public ActionResult Detail(int ID)

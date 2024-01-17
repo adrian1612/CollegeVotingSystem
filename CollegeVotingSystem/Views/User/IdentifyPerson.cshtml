@@ -1,12 +1,11 @@
 @using CollegeVotingSystem.Models
-@model tbl_User
 @{
-    ViewBag.Title = "Update User Biometric";
+    ViewBag.Title = "Identify Person";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="pagetitle">
-    <h1>User Profile</h1>
+    <h1>Identify Person</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
@@ -17,31 +16,10 @@
 </div>
 
 <div class="row g-2">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">@ViewBag.Title</div>
-                @using (Html.BeginForm())
-                {
-                    <div class="row mb-2 g-2">
-                        <div class="col-md-12">
-                            @Html.HiddenFor(model => model.ID)
-                            @Html.HiddenFor(model => model.Username)
-                            <input type="hidden" name="Fingerprint1" value="" />
-                            @if (ViewBag.Message != null)
-                            {
-		                        <p class="alert alert-success"><i class="fa fa-check-circle"></i> @ViewBag.Message</p>
-                            }
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-12">
-                            <input type="submit" value="Update" class="btn btn-success" />
-                        </div>
-                    </div>
-                }
                 <div id="Container">
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
@@ -70,7 +48,7 @@
                     </div>
                     <div id="content-capture" style="display : none;">
                         <div id="status"></div>
-                       
+                        <div id="imagediv"></div>
                         <div id="contentButtons">
                             <table width=70% align="center">
                                 <tr>
@@ -175,40 +153,13 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title">Information</div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="@string.Format("{0}", Model.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : Model.Img64)" width="100%" alt="Alternate Text" />
-                    </div>
-                    <div class="col-md-9">
-                        <h4>@Model.Fullname</h4>
-                        <span>@Model.CourseName</span><br />
-                        <span><b>@Model.StudentID</b></span><br />
-                        <span>@Model.Age Years old</span><br />
-                        @if (string.IsNullOrEmpty(Model.Fingerprint1))
-                        {
-                            <span class="text-warning fa-fade"><i class="fa fa-exclamation-triangle"></i> No available fingerprint</span>
-                        }
-                        else
-                        {
-                            <span class="text-success"><i class="fa fa-check-circle"></i> Fingerprint verified</span>
-                            <img src="@Url.Content(Model.Fingerprint1)" width="60" />
-                        }
-                    </div>
-                    <div class="col-md-12">
-                        <div id="imagediv"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+    
+    </script>
 }
