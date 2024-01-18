@@ -894,6 +894,7 @@
     <Content Include="Views\Election\ElectionVote.cshtml" />
     <Content Include="Views\User\UpdateUserBiometric.cshtml" />
     <Content Include="Views\User\IdentifyPerson.cshtml" />
+    <Content Include="Views\User\VerifyVote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

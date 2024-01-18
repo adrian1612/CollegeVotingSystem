@@ -1,11 +1,11 @@
 @using CollegeVotingSystem.Models
 @{
-    ViewBag.Title = "Identify Person";
+    ViewBag.Title = "Verify Vote";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="pagetitle">
-    <h1>Identify Person</h1>
+    <h1>Verify Vote</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
@@ -47,6 +47,7 @@
                                 <span id="course"></span><br />
                                 <span id="studentid"><b></b></span><br />
                                 <span id="age"></span><br />
+                                <h3 id="Message" class="text-success"></h3>
                             </div>
                         </div>
                     </div>
@@ -159,7 +160,7 @@
             data.append('base64', s);
             $.ajax({
                 type: 'post',
-                url: '@Url.Action("Identify", "User")',
+                url: '@Url.Action("VerifyVote", "User")',
                 data: data,
                 processData: false,
                 contentType: false,
@@ -176,6 +177,7 @@
                         $('#course').html(`Course: ${item.CourseName}`);
                         $('#studentid').html(`Student ID: ${item.StudentID}`);
                         $('#age').html(`${item.Age} Years Old`);
+                        $('#Message').text('Vote Counted');
                     } else {
                         $('#person_ident .row .col-md-3').html(`<img src="@Url.Content("~/Content/Img/noimage-available.jpeg")" width="150"/>`);
                         $('#fullname').html(`Fullname: N/A`);

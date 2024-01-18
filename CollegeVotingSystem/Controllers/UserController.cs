@@ -116,7 +116,27 @@ namespace CollegeVotingSystem.Models
         {
             var fingerprint = new Fingerprint();
             fingerprint.AsBitmap = new System.Drawing.Bitmap(new MemoryStream(Convert.FromBase64String(base64)));
-            return Json(mod.Find(mod.Identify(fingerprint).Id), JsonRequestBehavior.AllowGet);
+            var identiy = mod.Identify(fingerprint).Id;
+            var item = mod.Find(identiy);
+            var result = item == null ? new { Message = "Not Found!", item = item } : new { Message = "Verified", item = item };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult VerifyVote()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult VerifyVote(string base64)
+        {
+            var fingerprint = new Fingerprint();
+            fingerprint.AsBitmap = new System.Drawing.Bitmap(new MemoryStream(Convert.FromBase64String(base64)));
+            var identiy = mod.Identify(fingerprint).Id;
+            var item = mod.Find(identiy);
+            var result = item == null ? new { Message = "Not Found!", item = item } : new { Message = "Verified", item = item };
+            mod.VerifyVote(item);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult IdentifyPerson()

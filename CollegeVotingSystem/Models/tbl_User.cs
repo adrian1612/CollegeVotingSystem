@@ -137,7 +137,6 @@ namespace CollegeVotingSystem.Models
                 }
             });
             var prob = new Person();
-            prob.Id = 1;
             prob.Fingerprints.Add(fingerprint);
             afis.Extract(prob);
             var personprob = afis.Identify(prob, persons).SingleOrDefault();
@@ -151,7 +150,7 @@ namespace CollegeVotingSystem.Models
                 item.Fingerprints.Add(finger);
                 return item;
             }
-            return null;
+            return prob;
         }
 
         public SelectList ListUser(object Selected = null)
@@ -223,6 +222,15 @@ namespace CollegeVotingSystem.Models
                 p.Add("@bday", obj.bday);
                 p.Add("@Course", obj.Course);
 
+            }, CommandType.StoredProcedure);
+        }
+
+        public void VerifyVote(tbl_User obj)
+        {
+            s.Query("tbl_User_Proc", p =>
+            {
+                p.Add("@Type", "VerifyVote");
+                p.Add("@ID", obj.ID);
             }, CommandType.StoredProcedure);
         }
 
