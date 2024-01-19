@@ -1,3 +1,76 @@
-﻿@{
-    ViewBag.Title = "Dashboard Page";
+@using CollegeVotingSystem.Models
+@model IEnumerable<tbl_Candidate>
+@{
+    ViewBag.Title = "Election";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var candidate = new tbl_Candidate();
+    var position = new tbl_Position();
+    var MyVote = (tbl_Election)ViewBag.MyVote;
+}
+
+<style>
+    .col-md-4 .card:has(input[type=radio]:checked)  {
+        background-color: lightseagreen;
+        color:white;
+    }
+</style>
+
+<div class="pagetitle">
+    <h1>@ViewBag.Title</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
+            <li class="breadcrumb-item active">@ViewBag.Title</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            Election Summary
+        </div>
+        <h3 class="display-6">Candidates</h3>
+        <div class="row">
+            @foreach (var pos in position.List())
+            {
+                <div class="col-md-5">
+                    <h4 class="text-muted">@pos.Position</h4>
+                    <div class="row">
+                        @foreach (var cand in Model)
+                        {
+                            if (pos.ID == cand.Position)
+                            {
+                                <div class="col-md-12">
+                                    <div class="card" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                            <div class="col-md-3">
+                                                <img class="img-fluid rounded-start" src="@(cand.Img == null ? Url.Content("~/Content/Img/noimage-available.jpeg") : cand.Img64)" alt="Picture" />
+                                            </div>
+                                            <div class="col-md-9">
+                                                <div class="card-body mt-3">
+                                                    <h5><b>@cand.Fullname</b></h5>
+                                                    <span>@cand.Course</span><br />
+                                                    <span>@cand.Plataforma</span>
+                                                    <h3><b>@cand.VoteCount Total Vote</b></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script>
+     
+    </script>
 }

@@ -103,12 +103,17 @@ namespace CollegeVotingSystem.Models
         public ActionResult UpdateUserBiometric(tbl_User m)
         {
             ModelState.Clear();
+            if (string.IsNullOrEmpty(m.Fingerprint1))
+            {
+                ModelState.AddModelError("", "NO FINGER PRINT FOUND!");
+            }
             if (ModelState.IsValid)
             {
                 mod.UpdateUserBiometric(m);
                 return RedirectToAction("UpdateUserBiometric", new { ID = m.ID, cb = "User biometric successfully saved!" });
             }
-            return View(m);
+            var item = mod.Find(m.ID);
+            return View(item);
         }
 
         [HttpPost]
@@ -134,8 +139,12 @@ namespace CollegeVotingSystem.Models
             fingerprint.AsBitmap = new System.Drawing.Bitmap(new MemoryStream(Convert.FromBase64String(base64)));
             var identiy = mod.Identify(fingerprint).Id;
             var item = mod.Find(identiy);
-            var result = item == null ? new { Message = "Not Found!", item = item } : new { Message = "Verified", item = item };
-            mod.VerifyVote(item);
+            int status = -1;
+            if (item != null)
+            {
+                status = mod.VerifyVote(item);
+            }
+            var result = item == null ? new { Message = "Not Found!", item = item, Status = status } : new { Message = "Verified", item = item, Status = status };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

@@ -225,13 +225,16 @@ namespace CollegeVotingSystem.Models
             }, CommandType.StoredProcedure);
         }
 
-        public void VerifyVote(tbl_User obj)
+        public int VerifyVote(tbl_User obj)
         {
-            s.Query("tbl_User_Proc", p =>
+            var result = 0;
+            s.Query("tbl_Election_Proc", p =>
             {
                 p.Add("@Type", "VerifyVote");
-                p.Add("@ID", obj.ID);
-            }, CommandType.StoredProcedure);
+                p.Add("@User", obj.ID);
+            }, CommandType.StoredProcedure)
+            .ForEach(r => result = (int)r[0]);
+            return result;
         }
 
         public void UpdateUserBiometric(tbl_User obj)

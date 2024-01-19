@@ -13,9 +13,10 @@ namespace CollegeVotingSystem.Controllers
     [Authorized]
     public class HomeController : Controller
     {
+        tbl_Election mod = new tbl_Election();
         public ActionResult Index()
         {
-            return View();
+            return View(mod.ElectionSummary());
         }
 
         public ActionResult RestrictedAccess()

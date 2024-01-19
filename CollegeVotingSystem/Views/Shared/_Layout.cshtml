@@ -296,8 +296,14 @@
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="@Url.Action("IdentifyPerson", "User", new { area = "" })">
-                        <i class="bi bi-fingerprint"></i>
+                        <i class="bi bi-fingerprint text-primary"></i>
                         <span>Verify Person</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="@Url.Action("VerifyVote", "User", new { area = "" })">
+                        <i class="bi bi-fingerprint text-danger"></i>
+                        <span>Verify Vote</span>
                     </a>
                 </li>
             }

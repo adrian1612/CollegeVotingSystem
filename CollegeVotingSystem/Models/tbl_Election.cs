@@ -65,6 +65,16 @@ namespace CollegeVotingSystem.Models
             }).SingleOrDefault();
         }
 
+        public List<tbl_Candidate> ElectionSummary()
+        {
+            return s.Query<tbl_Candidate>("tbl_Election_Proc", p => { p.Add("@Type", "ElectionSummary"); }, CommandType.StoredProcedure)
+            .Select(r =>
+            {
+         
+                return r;
+            }).ToList();
+        }
+
         public tbl_Election MyVote()
         {
             var candidates = new tbl_Candidate().ListMyCandidate();

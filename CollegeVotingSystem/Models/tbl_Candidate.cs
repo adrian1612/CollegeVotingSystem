@@ -45,6 +45,8 @@ namespace CollegeVotingSystem.Models
         [Display(Name = "Plataforma")]
         public String Plataforma { get; set; }
 
+        public int VoteCount { get; set; }
+
         [Display(Name = "Active")]
         [ScaffoldColumn(false)]
         public Boolean? Active { get; set; }
@@ -73,7 +75,7 @@ namespace CollegeVotingSystem.Models
         public List<tbl_Candidate> ListMyCandidate()
         {
 
-            return s.Query<tbl_Candidate>("SELECT * FROM [vw_Candidate] WHERE UniqueID IN (SELECT Candidate FROM tbl_UnverifiedVote WHERE UserID = @ID)", p => p.Add("@ID", SystemSession.User.ID))
+            return s.Query<tbl_Candidate>("SELECT * FROM [vw_Candidate] WHERE UniqueID IN (SELECT Candidate FROM tbl_UnverifiedVote WHERE UserID = @ID) OR  UniqueID IN (SELECT Candidate FROM tbl_Vote WHERE UserID = @ID)", p => p.Add("@ID", SystemSession.User.ID))
             .Select(r =>
             {
 

@@ -20,7 +20,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title">@ViewBag.Title</div>
-                <div class="row g-2">
+                <div class="row g-5">
                     <div class="col-md-4">
                         <div class="row mb-3">
                             <label class="col-form-label col-md-4">READER</label>
@@ -37,19 +37,27 @@
                             </div>
                         </div>
                     </div>
-                    <div id="person_ident" class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-3 text-end">
+                    <div id="person_ident" class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Information
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 text-end">
 
-                            </div>
-                            <div class="col-md-9">
-                                <h4 id="fullname"></h4>
-                                <span id="course"></span><br />
-                                <span id="studentid"><b></b></span><br />
-                                <span id="age"></span><br />
-                                <h3 id="Message" class="text-success"></h3>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h4 id="fullname"></h4>
+                                        <span id="course"></span><br />
+                                        <span id="studentid"><b></b></span><br />
+                                        <span id="age"></span><br />
+                                        <h3 id="Message"></h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
                
@@ -177,13 +185,28 @@
                         $('#course').html(`Course: ${item.CourseName}`);
                         $('#studentid').html(`Student ID: ${item.StudentID}`);
                         $('#age').html(`${item.Age} Years Old`);
-                        $('#Message').text('Vote Counted');
+                        if (d.Status == 1) {
+                            $('#Message').attr('class', 'text-success');
+                            $('#Message').text('Vote Counted');
+                        } else if (d.Status == 2) {
+                            $('#Message').attr('class', 'text-warning');
+                            $('#Message').text('Vote already counted');
+                        } else if (d.Status == 3) {
+                            $('#Message').attr('class', 'text-danger');
+                            $('#Message').text('Candidate not found! not yet voting');
+                        } else {
+                            $('#Message').attr('class', 'text-info');
+                            $('#Message').text('NOT FOUND!');
+                        }
+                       
                     } else {
                         $('#person_ident .row .col-md-3').html(`<img src="@Url.Content("~/Content/Img/noimage-available.jpeg")" width="150"/>`);
                         $('#fullname').html(`Fullname: N/A`);
                         $('#course').html(`Course: N/A`);
                         $('#studentid').html(`Student ID: N/A`);
                         $('#age').html(`N/A`);
+                        $('#Message').attr('class', 'text-info');
+                        $('#Message').text('NOT FOUND!');
                     }
                     
                 }
