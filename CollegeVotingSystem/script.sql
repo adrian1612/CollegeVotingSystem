@@ -1,11 +1,11 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Database [dbCollegeVotingSystem]    Script Date: 21/01/2024 7:04:31 pm ******/
 CREATE DATABASE [dbCollegeVotingSystem]
 GO
 USE [dbCollegeVotingSystem]
 GO
-/****** Object:  UserDefinedTableType [dbo].[tp_Candidate]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  UserDefinedTableType [dbo].[tp_Candidate]    Script Date: 21/01/2024 7:04:31 pm ******/
 CREATE TYPE [dbo].[tp_Candidate] AS TABLE(
 	[ID] [int] NULL,
 	[UniqueID] [uniqueidentifier] NULL,
@@ -17,14 +17,14 @@ CREATE TYPE [dbo].[tp_Candidate] AS TABLE(
 	[Timestamp] [datetime] NULL
 )
 GO
-/****** Object:  UserDefinedTableType [dbo].[tp_Vote]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  UserDefinedTableType [dbo].[tp_Vote]    Script Date: 21/01/2024 7:04:31 pm ******/
 CREATE TYPE [dbo].[tp_Vote] AS TABLE(
 	[Election] [int] NULL,
 	[UserID] [int] NULL,
 	[Candidate] [uniqueidentifier] NULL
 )
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Course_Proc]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -79,7 +79,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Election_Proc]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Election_Proc]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -201,7 +201,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_Position_Proc]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -255,7 +255,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  StoredProcedure [dbo].[tbl_User_Proc]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,7 +344,7 @@ END
 
 
 GO
-/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_Candidate]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -369,7 +369,7 @@ CREATE TABLE [dbo].[tbl_Candidate](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Course]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_Course]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -390,7 +390,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Election]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_Election]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -413,7 +413,7 @@ CREATE TABLE [dbo].[tbl_Election](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Position]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_Position]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -434,7 +434,7 @@ PRIMARY KEY CLUSTERED
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_UnverifiedVote]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -452,7 +452,7 @@ CREATE TABLE [dbo].[tbl_UnverifiedVote](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[tbl_User]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_User]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -484,7 +484,7 @@ CREATE TABLE [dbo].[tbl_User](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  Table [dbo].[tbl_Vote]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -502,7 +502,7 @@ CREATE TABLE [dbo].[tbl_Vote](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  View [dbo].[vw_User]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  View [dbo].[vw_User]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -539,7 +539,7 @@ SELECT u.[ID]
 
 
 GO
-/****** Object:  View [dbo].[vw_Candidate]    Script Date: 19/01/2024 9:58:32 pm ******/
+/****** Object:  View [dbo].[vw_Candidate]    Script Date: 21/01/2024 7:04:31 pm ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
